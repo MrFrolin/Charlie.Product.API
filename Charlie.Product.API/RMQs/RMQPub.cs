@@ -2,7 +2,7 @@
 using RabbitMQ.Client;
 using System.Text;
 using System.Xml.Serialization;
-namespace Charlie.Customer.API.RMQs
+namespace Charlie.Product.API.RMQs
 {
     public class RMQPub
     {

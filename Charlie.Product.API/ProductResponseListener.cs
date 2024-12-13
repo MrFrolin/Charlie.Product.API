@@ -18,7 +18,7 @@ public class ProductResponseListener : BackgroundService
 
     protected override async Task ExecuteAsync(CancellationToken stoppingToken)
     {
-        await _rabbitMqClient.SubscribeAsync("customer.responses", async message =>
+        await _rabbitMqClient.SubscribeAsync("product.responses", async message =>
         {
             try
             {

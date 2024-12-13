@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Charlie.Product.Shared.DTOs;
+using Microsoft.AspNetCore.Mvc;
 
 namespace Charlie.Product.API.Controllers
 {
@@ -6,6 +7,13 @@ namespace Charlie.Product.API.Controllers
     [Route("api/[controller]")]
     public class ProductController : Controller
     {
+        private readonly RabbitMqClient _rabbitMqClient;
+
+        public ProductController(RabbitMqClient rabbitMqClient)
+        {
+            _rabbitMqClient = rabbitMqClient;
+        }
+
         [HttpGet]
         public IActionResult GetAll()
         {
@@ -14,15 +22,42 @@ namespace Charlie.Product.API.Controllers
 
         [HttpGet]
         [Route("{id}")]
-        public IActionResult Get(int id)
+        public async Task<IActionResult> GetProductByIdAsync(int productId)
         {
-            return Ok();
+            if (productId == null)
+            {
+                return BadRequest();
+            }
+            var correlationId = Guid.NewGuid().ToString();
+            var message = new
+            {
+                CorrelationId = correlationId,
+                ProductId = productId
+            };
+            await _rabbitMqClient.PublishAsync("product.operations", message);
+            return Accepted(new { Message = "Product retrieval started.", CorrelationId = correlationId });
         }
 
         [HttpPost]
-        public IActionResult Post()
+        public async Task<IActionResult> AddProductAsync([FromBody] ProductDTO productDTO)
         {
-            return Ok();
+            if (productDTO == null)
+            {
+                return BadRequest();
+            }
+
+            var correlationId = Guid.NewGuid().ToString();
+
+            var message = new
+            {
+                CorrelationId = correlationId,
+                ProductId = productDTO.ProductId,
+                Name = productDTO.Name,
+                Price = productDTO.Price
+            };
+
+            await _rabbitMqClient.PublishAsync("product.operations", message);
+            return Accepted(new { Message = "Product creation started.", CorrelationId = correlationId });
         }
     }
 }
