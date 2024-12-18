@@ -1,4 +1,5 @@
-﻿using RabbitMQ.Client;
+﻿using System.Collections.Concurrent;
+using RabbitMQ.Client;
 using RabbitMQ.Client.Events;
 using System.Text;
 using System.Text.Json;
