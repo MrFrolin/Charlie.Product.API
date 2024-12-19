@@ -1,9 +1,5 @@
 # Product API Documentation
 
-## Base URL
-
-The base URL for all the endpoints is:
-
 ## Endpoints
 
 ### 1. **Get All Products**
