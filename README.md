@@ -31,7 +31,7 @@ The base URL for all the endpoints is:
   ```bash
   GET /api/product/1
 
-  ### 3. **Add a New Product**
+### 3. **Add a New Product**
 
 - **URL:** `/api/product`
 - **Method:** `POST`
