@@ -26,7 +26,7 @@ public class ProductResponseListener : BackgroundService
 
                 if (response != null)
                 {
-                    _logger.LogInformation($"Received response for CorrelationId: {response.CorrelationId}, Status: {response.Status}");
+                    _logger.LogInformation($"Received response for CorrelationId: {response.CorrelationId}, Status: {response.Status} , Product: {response.Payload.Name}");
                 }
             }
             catch (Exception ex)

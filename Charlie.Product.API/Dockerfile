@@ -28,8 +28,8 @@ FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
 ENTRYPOINT ["dotnet", "Charlie.Product.API.dll"]
-ENV RabbitMq__HostName=rabbitmq
-ENV RabbitMq__Port=5672
-ENV RabbitMq__UserName=guest
-ENV RabbitMq__Password=guest
-ENV RabbitMq__VirtualHost=/
+#ENV RabbitMq__HostName=rabbitmq
+#ENV RabbitMq__Port=5672
+#ENV RabbitMq__UserName=guest
+#ENV RabbitMq__Password=guest
+#ENV RabbitMq__VirtualHost=/
